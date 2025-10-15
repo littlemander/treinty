@@ -1,55 +1,29 @@
 <?php
-//CONSTANTES DE CONFIGURACION GLOBALES
 
-//Titulo corto del sitio
-define("Sitio", "Social");
-
-//Titulo largo del sitio
-define("Sitio_Largo", "Social Networks");
-
-//Direccion de la web
-define("Sitio_direccion", "127.0.0.1/social");
-
-//IP del servidor MySQL
+define("SITE", "Social");
+define("HOST_DOMAIN", "127.0.0.1");
 define("MySQL_IP", "127.0.0.1");
-
-//Usuario del servidor MySQL
 define("MySQL_USER", "root");
-
-//Contraseña del servidor MySQL
 define("MySQL_PASS", "");
+define("MySQL_BD", "treinty");
+define("EMAIL_ADDRESS", "");
 
-//Base de datos del servidor MySQL
-define("MySQL_BD", "social");
+// error_reporting(E_ALL); ini_set('display_errors',1);
 
-//Email que se usara como emisor de los correos
-define("Email_Address", "javi.and.friends@gmail.com");
+$link = mysqli_connect(MySQL_IP, MySQL_USER, MySQL_PASS, MySQL_BD);
+if (!$link) {
+    die("Error al conectar con MySQL: " . mysqli_connect_error());
+}
+if (!mysqli_set_charset($link, "utf8mb4")) {
+    die("No se pudo establecer charset utf8mb4: " . mysqli_error($link));
+}
 
+setlocale(LC_ALL, "es_ES.UTF-8", "es_ES", "Spanish_Spain.1252", "esp");
 
+if (!mysqli_query($link, "SET lc_time_names = 'es_ES'")) {
+    die("MySQL lc_time_names error: " . mysqli_error($link));
+}
 
-//CONEXION BBDD
-$link = mysqli_connect(MySQL_IP, MySQL_USER, MySQL_PASS);
-if (!$link)
-	die("Error al conectar con el MySQL");
+require(__DIR__ . "/functions.php");
 
-$mysqli_db = mysqli_select_db($link, MySQL_BD);
-if (!$mysqli_db)
-	die("Error al seleccionar la base de datos");
-
-// CONTADOR DE TIEMPO DE EJECUCION
-/*$tiempo_inicio = microtime(true);
-
-//CONTADOR DE CONSULTAS
-$q_querys = mysqli_query($link, "SHOW SESSION STATUS LIKE 'Questions'");
-$r_querys = mysqli_fetch_array($q_querys);
-define("START_QUERIES", $r_querys['Value']);*/
-
-// Configuracion idioma de PHP para fechas (usar con strftime)
-setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
-
-// Configuracion idioma de MySql para fechas
-mysqli_query($link, "SET lc_time_names = 'es_ES'");
-
-// $ruta se usa para meter ../ cuando la peticion procede de ficheros en subdirectorios
-require($ruta."inc/functions.php");
 ?>

@@ -112,30 +112,34 @@ function fecha($fecha) {
 }
 
 //CABECERA
-function head($title = Sitio) {
+function head($title = SITE) {
 	print "
 		<!DOCTYPE html>
 		<html lang='es'>
 			<head>
 				
 				<!-- METAS -->
-				<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-				<meta name='Keywords' content='Social,red social,gratuito,asir'>
-				<meta name='Description' content='Proyecto de Red Social de 2 ASIR'>
-				 <meta name='author' content='Javier Gonzalez Rastrojo'>
+				<meta charset='UTF-8' />
+				<meta name='Keywords' content=''>
+				<meta name='Description' content=''>
 				
 				<!-- FAVICON -->
 				<link rel='icon' href='css/favicon.png' sizes='16x16 32x32 64x64 289x289' type='image/png'>
  				 
+				<!-- DAISY UI TAILWIND -->
+				<script src='assets/tailwind/tailwind.js'></script>
+
 				<!-- CSS -->
-				<link rel='stylesheet' href='css/style.css' type='text/css' />
-				<link rel='stylesheet' href='jscripts/jquery-ui/css/redmond/jquery-ui-1.9.0.custom.css' type='text/css' />
-				
-				<!-- JS -->
-				<script type='text/javascript' src='jscripts/jquery-1.8.2.min.js'></script>
-				<script type='text/javascript' src='jscripts/jquery-ui/jquery-ui-1.9.0.js'></script>
-				<script type='text/javascript' src='jscripts/general.js'></script>
-				<script type='text/javascript' src='jscripts/chat.js'></script>
+				<link rel='stylesheet' href='css/style.css' type='text/css'/>
+
+				<!-- JQUERY -->
+				<link rel='stylesheet' href='assets/js/jquery-ui/css/jquery-ui.min.css' type='text/css'/>
+				<script type='text/javascript' src='assets/js/jquery/jquery-3.7.1.min.js'></script>
+				<script type='text/javascript' src='assets/js/jquery-ui/jquery-ui.min.js'></script>
+
+				<!-- CUSTOM JS -->
+				<script type='text/javascript' src='assets/js/general.js'></script>
+				<script type='text/javascript' src='assets/js/chat.js'></script>
 				<script  type='text/javascript'>";
 
 	if ($_SESSION['chat_estado'] == "1") {
@@ -253,7 +257,7 @@ function email_send($destinatario_name, $destinatario_email, $titulo, $mensaje){
 	//CABECERAS
 	$Headers = "MIME-Version: 1.0\r\n";
 	$Headers .= "To: {$destinatario_name} <{$destinatario_email}>\r\n";
-	$Headers .= "From: ".Sitio." <".Email_Address.">\r\n";
+	$Headers .= "From: ".SITE." <".Email_Address.">\r\n";
 	$Headers .= "Reply-To: ".Email_Address."\r\n";
 	$Headers .= "Content-Type: multipart/alternative; boundary=$boundary\r\n";
 	
