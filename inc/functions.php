@@ -120,16 +120,21 @@ function head($title = SITE) {
 				
 				<!-- METAS -->
 				<meta charset='UTF-8' />
+				<meta content='width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no' name='viewport' />
 				<meta name='Keywords' content=''>
 				<meta name='Description' content=''>
 				
 				<!-- FAVICON -->
 				<link rel='icon' href='css/favicon.png' sizes='16x16 32x32 64x64 289x289' type='image/png'>
  				 
-				<!-- DAISY UI TAILWIND -->
-				<script src='assets/tailwind/tailwind.js'></script>
+				<!-- GOOGLE FONTS -->
+				<link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'>
 
+				<!-- TAILWIND -->
+				<script src='assets/js/tailwind/tailwind.js'></script>
+				
 				<!-- CSS -->
+				<link rel='stylesheet' href='css/vendors.css' type='text/css'/>
 				<link rel='stylesheet' href='css/style.css' type='text/css'/>
 
 				<!-- JQUERY -->

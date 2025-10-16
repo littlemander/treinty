@@ -36,5 +36,20 @@ Estoy centrando los esfuerzos en localizar y parchear todas las funciones obsole
 Si sabes de **PHP**, **JavaScript**, **diseño o maquetación web**, **desarrollo de aplicaciones Android o iOS**, o crees que puedes aportar algo al proyecto, [enviame un correo](mailto:colaboracion@treinty.online).
 
 
+## TODO
 
+### Renovar interfaz
+
+- [ ] Login
+- [ ] Registro
+- [ ] Inicio
+- [ ] Perfil
+- [ ] Mensajes
+- [ ] Gente
+- [ ] Albums
+- [ ] Fotos
+- [ ] Ajustes
+- [ ] ToS
+
+ 
 *Treinty es un proyecto en constante evolución. Gracias por tu apoyo en su desarrollo y ayudar a mantener viva la esencia de la antigua internet.*

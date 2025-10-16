@@ -31,7 +31,7 @@ if ($perfil == "ajeno") {
 }
 echo "<script type='text/javascript' src='assets/js/perfil.js'></script>";
 echo "<body id='seccion_perfil'>";
-require ("inc/estructura.inc.php");
+require ("inc/estructura_inicio.php");
 ?>
 
 <div class="barra_izq">

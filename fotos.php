@@ -8,7 +8,7 @@ head("Fotos");
 echo "<script type='text/javascript' src='assets/js/foto_edicion.js'></script>";
 echo "<script type='text/javascript' src='assets/js/foto_visualizador.js'></script>";
 echo "<body id='seccion_fotos'>";
-require ("inc/estructura.inc.php");
+require ("inc/estructura_inicio.php");
 require ("inc/chat.php");
 
 if (!$_GET['iduser']) {

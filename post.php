@@ -251,17 +251,33 @@ if ($_POST['foto_principal']) {
 }
 
 if ($_POST['foto_borrar']) {
-	$result = mysqli_query($link, "SELECT * from fotos WHERE uploader='" . $global_idusuarios . "' AND idfotos='" . $_POST['foto_borrar'] . "'");
-	if (mysqli_num_rows($result) == 1) {
-		mysqli_query($link, "UPDATE usuarios SET idfotos_princi = '1' WHERE idfotos_princi = '" . $_POST['foto_borrar'] . "' AND sexo = 'h'");
-		mysqli_query($link, "UPDATE usuarios SET idfotos_princi = '2' WHERE idfotos_princi = '" . $_POST['foto_borrar'] . "' AND sexo = 'm'");
-		$result = mysqli_fetch_assoc($result);
-		unlink($result['archivo']);
+    $result = mysqli_query($link, "SELECT * from fotos WHERE uploader='" . $global_idusuarios . "' AND idfotos='" . $_POST['foto_borrar'] . "'");
+    if (mysqli_num_rows($result) == 1) {
+        mysqli_query($link, "UPDATE usuarios SET idfotos_princi = '1' WHERE idfotos_princi = '" . $_POST['foto_borrar'] . "' AND sexo = 'h'");
+        mysqli_query($link, "UPDATE usuarios SET idfotos_princi = '2' WHERE idfotos_princi = '" . $_POST['foto_borrar'] . "' AND sexo = 'm'");
+        
+        $result = mysqli_fetch_assoc($result);
+        
+        // Verificar que el archivo existe antes de borrarlo
+        if(file_exists($result['archivo'])){
+            if(unlink($result['archivo'])){
+                // Archivo borrado correctamente
+            } else {
+                error_log("Error: No se pudo borrar el archivo " . $result['archivo']);
+            }
+        }
+        
+        // También borrar miniaturas si existen
+        $thumbnail = str_replace('.jpg', '_thumb.jpg', $result['archivo']);
+        if(file_exists($thumbnail)){
+            unlink($thumbnail);
+        }
 
-		mysqli_query($link, "DELETE FROM fotos WHERE uploader='" . $global_idusuarios . "' AND idfotos='" . $_POST['foto_borrar'] . "'");
-	}
-	die();
+        mysqli_query($link, "DELETE FROM fotos WHERE uploader='" . $global_idusuarios . "' AND idfotos='" . $_POST['foto_borrar'] . "'");
+    }
+    die();
 }
+
 
 if ($_POST['foto_comentario']) {
 	mysqli_query($link, "INSERT INTO fotos_comentarios (fotos_idfotos,emisor,comentario,fecha) VALUES ('" . $_POST['idfotos'] . "','" . $global_idusuarios . "','" . $_POST['foto_comentario'] . "',now())");

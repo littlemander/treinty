@@ -1,4 +1,3 @@
-<h2>Novedades</h2>
 <?php
 // USUARIOS CON NOVEDADES
 $q_users = mysqli_query($link, "SELECT MAX(novedades.fecha) as fecha,propietario, idusuarios, nombre, apellidos, archivo

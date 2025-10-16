@@ -8,6 +8,7 @@ define("MySQL_PASS", "");
 define("MySQL_BD", "treinty");
 define("EMAIL_ADDRESS", "");
 
+
 // error_reporting(E_ALL); ini_set('display_errors',1);
 
 $link = mysqli_connect(MySQL_IP, MySQL_USER, MySQL_PASS, MySQL_BD);

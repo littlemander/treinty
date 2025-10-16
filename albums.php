@@ -2,7 +2,7 @@
 require ("inc/verify_login.php");
 head("Albums");
 echo "<body id='seccion_albums'>";
-require ("inc/estructura.inc.php");
+require ("inc/estructura_inicio.php");
 ?>
 <div class="barra_full">
 	<div class="marco">
@@ -28,10 +28,7 @@ require ("inc/estructura.inc.php");
 		$bottom = 0;
 		$left = 0;
 		while ($row = mysqli_fetch_assoc($fotos)) {
-			echo "<a href='album.php?iduser=" . $_GET['iduser'] . "&idalbum=subidas'><img class='album_cubierta' style='bottom:" . $bottom . "px;left:" . $left . "px;max-width:" . $width . "px;max-height:" . $height . "px;' alt='cubierta album' src='" . $row['archivo'] . "' /><br></a><br>";
-
-			$bottom = $bottom + 90;
-			$left = $left + 90;
+			echo "<a href='album.php?iduser=" . $_GET['iduser'] . "&idalbum=subidas'><img class='album_cubierta' src='" . $row['archivo'] . "' /></a>";
 		}
 	} else {
 		echo "No has subido ninguna foto";

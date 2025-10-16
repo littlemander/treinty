@@ -15,13 +15,12 @@
 		require("inc/mps/enviados.inc.php");
 	}
 	
-
+ 
 	function estructura($seccion){
 		global $link;
 		echo "<body id='{$seccion}'>";
-		require("inc/estructura.inc.php");
-		require ("inc/chat.php");
-		print "<div class='barra_izq'>
+		require("inc/estructura_inicio.php");
+		print "<aside class='flex-shrink-0'>
 					<div class='marco_small lista_enlaces' style='padding: 0;'>
 						<ul>
 							<li><a href='mp.php?modo=enviar'>Enviar mensaje</a></li>
@@ -29,7 +28,7 @@
 							<li><a href='mp.php?modo=enviados'>Mensajes Enviados</a></li>
 						</ul>
 					</div>
-				</div>
+				</aside>
 				<script>
 					$(document).ready(function() {
 						// Señala en el menu vertical la pagina actual
@@ -47,7 +46,7 @@
 						});
 					});
 				</script>
-				<div class='barra_centro_der'>
+				<main>
 					<div class='marco'>
 				";
 	}

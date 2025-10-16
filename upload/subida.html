@@ -10,7 +10,7 @@
 	$(function() {
 		$("#uploader").pluploadQueue({
 			// General settings
-			runtimes : 'html5,flash,silverlight,html4',
+			runtimes : 'html5',
 			url : 'upload/upload.php',
 			max_file_size : '10mb',
 			chunk_size : '1mb',
@@ -25,11 +25,6 @@
 				extensions : "jpg,gif,png,jpeg,bmp"
 			}],
 
-			// Flash settings
-			flash_swf_url : 'upload/js/plupload.flash.swf',
-
-			// Silverlight settings
-			silverlight_xap_url : 'upload/js/plupload.silverlight.xap'
 		});
 
 		// Client side form validation

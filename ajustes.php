@@ -1,7 +1,7 @@
 <?php
 require ("inc/verify_login.php");
 head("Ajustes");
-require ("inc/estructura.inc.php");
+require ("inc/estructura_inicio.php");
 ?>
 <div class="barra_izq">
 	<div class="marco_small lista_enlaces" style="padding: 0;">

@@ -2,7 +2,7 @@
 	require("inc/verify_login.php");
 	head("Gente");
 	echo "<body id='seccion_gente'>";
-	require("inc/estructura.inc.php");
+	require("inc/estructura_inicio.php");
 ?>
 <div class='barra_izq_centro' style="width: 710px;">
 	<div class="marco">
