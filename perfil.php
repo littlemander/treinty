@@ -34,19 +34,22 @@ echo "<body id='seccion_perfil'>";
 require ("inc/estructura_inicio.php");
 ?>
 
-<div class="barra_izq">
+<aside class="flex-shrink-0">
 	<?php
 	require 'inc/perfil/datos.php';
 	?>
-</div>
+</aside>
 
-<div class="barra_centro_der" >
+<main>
 	<?php
 	require 'inc/perfil/tablon.php';
 	require 'inc/perfil/albums.php';
 	require 'inc/perfil/comentarios.php';
 	?>
-</div>
+</main>
+<aside class="flex-shrink-0">
+
+</aside>
 
 <?php
 require ("inc/chat.php");

@@ -1,136 +1,94 @@
 <?php
-require("inc/verify_login.php");
-head("Albums");
-echo "<body id='seccion_albums'>";
-require("inc/estructura_inicio.php");
+
+//TODO: Pulir estetica
+require ("inc/verify_login.php");
+head("Subir fotos");
+require ("upload/subida.html");
 ?>
-<div class="barra_full">
-    <div class="marco">
-        <?php
-        // Albums de fotos de ¿?
-        if (!$_GET['iduser']) {
-            $_GET['iduser'] = $global_idusuarios;
-            $user = 'yo';
-            echo "<h2 style='margin-bottom:0px;'>Mis Albums de imagenes</h2>";
-        } else {
-            $usuario = mysqli_query($link,"SELECT * FROM usuarios WHERE idusuarios='" . $_GET['iduser'] . "'");
-            if (mysqli_num_rows($usuario) > 0) {
-                $row = mysqli_fetch_assoc($usuario);
-                echo "<h2 style='margin-bottom:0px;'>Albums de imagenes de " . htmlspecialchars($row['nombre']) . "</h2>";
-            }
-        }
-        ?>
+</head>
+<body>
+	<?php
+	require ("inc/estructura_inicio.php");
+	?>
+	<div class="barra_full">
+	<div class="marco">
+		<?php
+		if ($_POST['subir_fotos']) {
+			$count = 0;
+			foreach ($_POST as $name => $value) {
+				if (preg_match("/tmpname/", $name, $algohaykeponer) == 1) {
+					$count++;
+					if($_POST['idalbums']=="")
+						$_POST['idalbums'] = "NULL";
+					
+					mysqli_query($link,"INSERT INTO fotos (titulo,archivo,uploader,fecha,albums_idalbums) VALUES ('" . $_POST['titulo'] . "','user_fotos/" . $value . "','" . $global_idusuarios . "',now()," . $_POST['idalbums'] . ")");
+					error_mysql("exit");
+				}
+			}
 
-        <!-- Subidas -->
-        <div class='album'>
-            <div class='album_titulo'>
-                <a href='album.php?iduser=<?php echo $_GET['iduser']; ?>&idalbum=subidas'>Fotos subidas</a>
-            </div>
-            <div class="album_cubiertas">
-                <?php
-                $fotos = mysqli_query($link,"SELECT * FROM fotos WHERE uploader='" . $_GET['iduser'] . "' ORDER BY idfotos DESC LIMIT 3");
-                if (mysqli_num_rows($fotos)) {
-                    while ($row = mysqli_fetch_assoc($fotos)) {
-                        echo "<a href='album.php?iduser=" . $_GET['iduser'] . "&idalbum=subidas'><img class='album_cubierta' alt='cubierta album' src='" . htmlspecialchars($row['archivo']) . "' /></a>";
-                    }
-                } else {
-                    echo "<span>No has subido ninguna foto</span>";
-                }
-                ?>
-            </div>
-        </div>
+			if ($count > 0) {
+				//Si ha subido fotos recientemente hacemos update sino insert
+				$q_novedades = mysqli_query($link,"SELECT idnovedades,datos FROM novedades WHERE propietario = {$global_idusuarios} AND tipo = 'subida_fotos' AND fecha > ADDTIME(now(), '-7 0:0:0') LIMIT 1");
+				if(mysqli_num_rows($q_novedades)==1){
+					$r_novedades=mysqli_fetch_assoc($q_novedades);
+					$suma = $r_novedades['datos'] + $count;
+					mysqli_query($link,"UPDATE novedades SET datos='{$suma}' WHERE idnovedades={$r_novedades['idnovedades']}");
+					echo mysqli_error($link);
+				}else{
+					mysqli_query($link,"INSERT INTO novedades (fecha,tipo, propietario, datos) VALUES (now(),'subida_fotos','{$global_idusuarios}','{$count}')");
+				}
+				?>
+				
+				<div class='centrar'>
+					<div class="ok_ajustable">
+					Fotos subidas con exito, puedes verlas en tus <a href='albums.php' class='link'>albums</a>
+					</div>
+				</div>
+				
+				<?php
+			} else {
+				echo "<div class='centrar'>
+					<div class='error_ajustable'>
+						Faltan las imagenes
+					</div>
+				</div>";
+			}
+		}
+		?>
+		<form method="post" action="subir_fotos.php" enctype="multipart/form-data">
+			<b>Titulo(s):</b>			
+				<div class="input">
+					<span>
+						<input type="text" name="titulo" placeholder="Escribe un titulo para las fotos" size='55'>
+					</span>
+				</div>
+			<br />
+			<b>Album:</b>
+			<?php
+			$albums = mysqli_query($link,"SELECT * FROM `albums` WHERE usuarios_idusuarios='" . $global_idusuarios . "'");
+			if (mysqli_num_rows($albums) > 0) {
+				print "<div class='input'>
+						<span class='select'>
+							<select name='idalbums'><option value='NULL'>Ninguno</option>";
+				while ($row = mysqli_fetch_assoc($albums)) {
+					echo "<option value='" . $row['idalbums'] . "'>" . $row['album'] . "</option>";
+				}
+				echo "</select></span></div>";
+			} else {
+				echo "<span class='ayuda' title='Primero debes crear un album'>Ninguno</span>";
+			}
+			?>
+			</select>
+			<br />
+			<b>Imagenes:</b>
+			<br />
+			<div id="uploader"></div>
+			<input type="hidden" name="subir_fotos" value="1" />
+			<button type='submit' class="azul"><span><b>Subir fotos</b></span></button>
+		</form>
 
-        <!-- Etiquetadas -->
-        <div class='album'>
-            <div class='album_titulo'>
-                <a href='album.php?iduser=<?php echo $_GET['iduser']; ?>&idalbum=etiquetadas'>Fotos etiquetadas</a>
-            </div>
-            <div class="album_cubiertas">
-                <?php
-                $fotos = mysqli_query($link,"SELECT * FROM fotos, etiquetas WHERE usuarios_idusuarios = '" . $_GET['iduser'] . "' AND idfotos = fotos_idfotos ORDER BY idfotos DESC LIMIT 3");
-                if (mysqli_num_rows($fotos)) {
-                    while ($row = mysqli_fetch_assoc($fotos)) {
-                        echo "<a href='album.php?iduser=" . $_GET['iduser'] . "&idalbum=etiquetadas'><img class='album_cubierta' alt='cubierta album' src='" . htmlspecialchars($row['archivo']) . "' /></a>";
-                    }
-                } else {
-                    echo "<span>No estas etiquetado en ninguna foto</span>";
-                }
-                ?>
-            </div>
-        </div>
-
-        <!-- Personalizados -->
-        <h2 style='clear: both;margin-bottom:0px;'>Albums personales</h2>
-        <?php
-        $personalizados = mysqli_query($link,"SELECT * FROM `albums` WHERE usuarios_idusuarios='" . $_GET['iduser'] . "'");
-        if (mysqli_num_rows($personalizados) > 0) {
-            while ($row = mysqli_fetch_assoc($personalizados)) {
-                echo "<div class='album'><div class='album_titulo'>
-                        <a href='album.php?iduser=" . $_GET['iduser'] . "&idalbum=" . $row['idalbums'] . "'>" . htmlspecialchars($row['album']) . "</a>
-                        <div class='album_renombrar' onclick=\"album_renombrar('" . $row['idalbums'] . "','" . htmlspecialchars($row['album']) . "')\"></div>
-                        <div class='album_borrar' onclick=\"album_borrar('" . $row['idalbums'] . "','" . htmlspecialchars($row['album']) . "')\"></div>
-                    </div>
-                    <div class='album_cubiertas'>";
-                $fotos = mysqli_query($link,"SELECT * FROM fotos WHERE albums_idalbums = '" . $row['idalbums'] . "' ORDER BY idfotos LIMIT 3");
-                if (mysqli_num_rows($fotos)) {
-                    while ($row2 = mysqli_fetch_assoc($fotos)) {
-                        echo "<a href='album.php?iduser=" . $_GET['iduser'] . "&idalbum=" . $row['idalbums'] . "'><img class='album_cubierta' alt='cubierta album' src='" . htmlspecialchars($row2['archivo']) . "' /></a>";
-                    }
-                } else {
-                    echo "<span>No hay ninguna foto en este album</span>";
-                }
-                echo "</div></div>";
-            }
-        }
-        ?>
-
-        <!-- Formulario creacion de albumes -->
-        <div style='display: inline-block;margin: 25px;'>
-            Crea un album personalizado
-            <hr>
-            <div class="input">
-                <span>
-                    <input name="album" id="album_id" type="text" placeholder="Nombre del album">
-                </span>
-            </div>
-            <button type='button' class="azul" onclick="album_crear()"><span><b>Crear album</b></span></button>
-        </div>
-    </div>
-
-    <script>
-        $(document).ready(function() {
-            // Muestra y oculta los menús
-            $('.album').hover(function(e) {
-                $(this).find('.album_renombrar,.album_borrar').css("visibility", "visible");
-            }, function(e) {
-                $(this).find('.album_renombrar,.album_borrar').css("visibility", "hidden");
-            });
-        });
-
-        function album_crear() {
-            var name = $("input[name='album']").val();
-            if (name != null && name != "") {
-                ajax_post({
-                    data: 'album=' + name,
-                    reload: true
-                });
-            }
-        }
-        
-        function album_renombrar(id, name) {
-            var name = prompt("Escribe el nombre del album", name);
-            if (name != null && name != "") {
-                ajax_post({data:'album_renombrar=' + name + '&album_id=' + id,reload: true});
-            }
-        }
-        function album_borrar(id, name) {
-            var r = confirm("¿Estás seguro de borrar el album \"" + name + "\" ?");
-            if (r == true && id != "") {
-                ajax_post({data:'album_borrar=' + id,reload: true});
-            }
-        }
-    </script>
-</div>
-<?php require ("inc/chat.php"); ?>
+<?php
+require ("inc/chat.php");
+?>
 </body>
 </html>

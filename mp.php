@@ -21,11 +21,11 @@
 		echo "<body id='{$seccion}'>";
 		require("inc/estructura_inicio.php");
 		print "<aside class='flex-shrink-0'>
+					<a class='treinty-button w-full block mb-2 text-center' href='mp.php?modo=enviar'>Enviar mensaje</a>
 					<div class='marco_small lista_enlaces' style='padding: 0;'>
 						<ul>
-							<li><a href='mp.php?modo=enviar'>Enviar mensaje</a></li>
-							<li><a href='mp.php?modo=recibidos'>Mensajes Recibidos</a></li>
-							<li><a href='mp.php?modo=enviados'>Mensajes Enviados</a></li>
+							<li><a href='mp.php?modo=recibidos'>Bandeja de entrada</a></li>
+							<li><a href='mp.php?modo=enviados'>Enviados</a></li>
 						</ul>
 					</div>
 				</aside>

@@ -33,9 +33,9 @@ if(mysqli_num_rows($q_users)>0){
 				if($r_novedades['visitante'] != $global_idusuarios){
 					$q_novedad = mysqli_query($link, "SELECT * FROM usuarios WHERE idusuarios = {$r_novedades['visitante']}");
 					$r_novedad = mysqli_fetch_assoc($q_novedad);
-					echo "agreg&oacute; a " . NombreApellido($r_novedad['nombre']." ".$r_novedad['apellidos']);
+					echo "Y " . NombreApellido($r_novedad['nombre']." ".$r_novedad['apellidos']) . " ahora son amigos";
 				}else{
-					echo "es ahora tu amigo!";
+					echo "Y tu ahora sois amigos";
 				}
 				
 				echo " <div class='fecha'>" . fecha($r_novedades['fecha'], "now") . "</div>";
@@ -49,7 +49,7 @@ if(mysqli_num_rows($q_users)>0){
 				}
 				$q_novedad = mysqli_query($link, "SELECT * FROM fotos WHERE uploader = {$r_novedades['propietario']} ORDER BY idfotos DESC LIMIT {$limite}");
 				if (mysqli_num_rows($q_novedad) > 0) {
-					echo "subi&oacute; {$r_novedades['datos']} fotos <div class='fecha'>" . fecha($r_novedades['fecha'], "now") . "</div><div class='imagenes'>";
+					echo "Ha subido {$r_novedades['datos']} fotos <div class='fecha'>" . fecha($r_novedades['fecha'], "now") . "</div><div class='imagenes'>";
 					while ($r_novedad = mysqli_fetch_assoc($q_novedad)) {
 						echo "<a href='fotos.php?iduser={$r_users['idusuarios']}&idalbum=subidas&idfotos={$r_novedad['idfotos']}'><img src='" . $r_novedad['archivo'] . "' class='imagen'></a>";
 					}
@@ -61,11 +61,11 @@ if(mysqli_num_rows($q_users)>0){
 				$q_novedad = mysqli_query($link, "SELECT * FROM fotos, usuarios WHERE idfotos = {$r_novedades['datos']} AND idusuarios={$r_novedades['propietario']}");
 				echo mysqli_error($link);
 				$r_novedad = mysqli_fetch_assoc($q_novedad);					
-				echo "cambi&oacute; su foto principal <div class='fecha'>" . fecha($r_novedades['fecha'], "now") . "</div><br><img src='" . $r_novedad['archivo'] . "' style='max-height:100px'>";
+				echo "Ha cambiado su foto de perfil <div class='fecha'>" . fecha($r_novedades['fecha'], "now") . "</div><br><img src='" . $r_novedad['archivo'] . "' style='max-height:100px'>";
 			}
 	
 			if ($r_novedades['tipo'] == "estado") {
-				echo "cambi&oacute; su estado a <i>" . $r_novedades['datos'] . "</i> <div class='fecha'>" . fecha($r_novedades['fecha'], "now") . "</div>";
+				echo "Ha cambiado su estado a <i>" . $r_novedades['datos'] . "</i> <div class='fecha'>" . fecha($r_novedades['fecha'], "now") . "</div>";
 			}
 	
 			if ($r_novedades['tipo'] == "tablon") {

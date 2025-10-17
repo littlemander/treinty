@@ -153,7 +153,131 @@ function head($title = SITE) {
 		echo "chat_estado=0;";
 	}
 	print "</script>
-				<title>{$title}</title>";
+				<title>{$title}</title>
+				<style>
+				        @import url('https://fonts.googleapis.com/css2?family=Arial:wght@400;600;700&display=swap');
+        
+        * {
+          font-family: Arial, sans-serif;
+        }
+        
+        .treinty-blue {
+          background: linear-gradient(180deg, #6b9ac4 0%, #5487ba 100%);
+        }
+        
+        .treinty-nav-item {
+          color: white;
+          padding: 8px 12px;
+          text-decoration: none;
+          font-size: 13px;
+          font-weight: 600;
+          transition: background 0.2s;
+        }
+        
+        .treinty-nav-item:hover {
+          background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .treinty-nav-item.active {
+          background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .treinty-button {
+          background: linear-gradient(180deg, #4a90e2 0%, #357abd 100%);
+          border: 1px solid #2e6da4;
+          color: white;
+          padding: 6px 14px;
+          border-radius: 3px;
+          font-size: 12px;
+          font-weight: 600;
+          cursor: pointer;
+          box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .treinty-button:hover {
+          background: linear-gradient(180deg, #5a9ef2 0%, #4580cd 100%);
+        }
+        
+        .treinty-button:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+        
+        .treinty-sidebar {
+          background: white;
+          border: 1px solid #d3d8dd;
+          border-radius: 4px;
+          box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        
+        .treinty-logo {
+          font-size: 24px;
+          font-weight: 700;
+          color: white;
+          text-decoration: none;
+          letter-spacing: -0.5px;
+        }
+
+        .mobile-nav-item {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 8px;
+          color: rgba(255, 255, 255, 0.7);
+          transition: all 0.2s;
+        }
+
+        .mobile-nav-item.active {
+          color: white;
+          background: rgba(255, 255, 255, 0.15);
+        }
+
+        .mobile-menu-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+    animation: fadeIn 0.2s;
+}
+
+.mobile-menu-overlay.active {
+    display: block;
+}
+
+.mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 75vw;
+    background-color: white;
+    animation: slideInLeft 0.3s;
+    z-index: 50;
+    overflow-y: auto;
+}
+
+.mobile-menu.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+</style>
+			</head>
+			<body class='bg-gray-100'>
+	";
 }
 
 // Pasamos el ID de la provincia y nos devuelve el nombre

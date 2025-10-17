@@ -10,13 +10,20 @@ if($_POST['online_keep']){
 ########	PERFIL
 
 if ($_POST['estado_cambiar']) {
-	mysqli_query($link, "UPDATE usuarios SET estado='" . $_POST['estado'] . "' WHERE idusuarios='" . $global_idusuarios . "'");
-	
-	// Novedad
-	$novedad = array("propietario" => $global_idusuarios, "tipo" => 'estado', "datos" => $_POST['estado']);
-	novedades($novedad);
-	die();
+    $estado = mysqli_real_escape_string($link, $_POST['estado']);
+    $sql = "UPDATE usuarios SET estado='$estado', fecha_estado=NOW() WHERE idusuarios='$global_idusuarios'";
+    mysqli_query($link, $sql);
+
+    // Registrar novedad
+    $novedad = array(
+        "propietario" => $global_idusuarios,
+        "tipo" => 'estado',
+        "datos" => $_POST['estado']
+    );
+    novedades($novedad);
+    die();
 }
+
 
 
 if ($_POST['tablon_leer_comentarios']) {
